@@ -1,0 +1,11 @@
+wordpress:
+  db:
+    hostname: 127.0.0.1
+    username: root
+    password:
+    database: wordpress
+    tablePrefix: wp_
+server:
+  enabled: true
+  graphiql: true
+  port: 3000
