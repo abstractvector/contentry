@@ -1,3 +1,4 @@
+debug: false
 wordpress:
   db:
     hostname: 127.0.0.1
