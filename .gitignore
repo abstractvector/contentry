@@ -58,4 +58,4 @@ typings/
 .env
 
 # transpiled JavaScript files
-build/
+lib/

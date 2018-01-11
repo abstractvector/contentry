@@ -4,9 +4,9 @@
   "description": "Expose WordPress through GraphQL",
   "main": "index.js",
   "scripts": {
-    "start": "node build/server.js",
-    "clean": "rimraf build && mkdir build",
-    "build-server": "babel --presets es2015 -d ./build ./src",
+    "start": "node lib/server.js",
+    "clean": "rimraf lib && mkdir lib",
+    "build-server": "babel --presets es2015 -d ./lib ./src",
     "build": "npm run clean && npm run build-server",
     "watch": "nodemon -w src/ --exec \"babel-node --presets es2015 src/server.js\""
   },
