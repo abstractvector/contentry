@@ -1,29 +1,93 @@
-import Koa from 'koa';
-import KoaRouter from 'koa-router';
-import KoaBody from 'koa-bodyparser';
-import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
-import config from 'config';
+import { EventEmitter } from 'events';
 
-import Contentry from './app';
+import { makeExecutableSchema } from 'graphql-tools';
+import Sequelize from 'sequelize';
 
-const contentry = new Contentry(config);
+import Resolvers from './resolvers';
+import { loadModels } from './models';
 
-if (true === config.get('server.enabled')) {
-  const app = new Koa();
-  const router = new KoaRouter();
+class Contentry extends EventEmitter {
 
-  // enable the GraphQL endpoint
-  router.post('/graphql', KoaBody(), graphqlKoa({ schema: contentry.getSchema() }));
-  router.get('/graphql', graphqlKoa({ schema: contentry.getSchema() }));
+  constructor(options) {
+    super();
 
-  // enable GraphiQL UI
-  if (true === config.get('server.graphiql')) {
-    router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }));
+    this._parseOptions(options);
+
+    const databaseOptions = this.options.wordpress.db;
+
+    // connect to the database
+    this.emit('beforeCreateDb', this);
+    this.db = new Sequelize(
+      databaseOptions.database,
+      databaseOptions.username,
+      databaseOptions.password,
+      {
+        logging: this.options.debug ? console.log : false,
+        host: databaseOptions.hostname,
+        dialect: 'mysql',
+        operatorsAliases: false,
+        define: {
+          underscored: true,
+          timestamps: false
+        }
+      }
+    );
+
+    // add a tableName prefix to all tables here
+    this.db.addHook('beforeDefine', (attributes, options) => {
+      options.tableName = databaseOptions.tablePrefix + options.tableName;
+    });
+
+    this.emit('beforeLoadModels', this);
+    const models = loadModels(this.db);
+
+    this.emit('beforeLoadResolvers', this);
+    this.resolvers = new Resolvers(models);
+
+    this.emit('beforeCreateSchema', this);
+    this.schema = makeExecutableSchema({
+      typeDefs: this.resolvers.getTypeDefs(),
+      resolvers: this.resolvers.getResolvers()
+    });
+    
+    this.emit('afterConstruct', this);
   }
 
-  app.use(router.routes());
-  app.use(router.allowedMethods());
+  _parseOptions(options) {
+    this.options = Object.assign({
+      debug: false,
+      wordpress: {
+        db: {
+          hostname: 'localhost',
+          username: 'user',
+          password: 'pass',
+          database: 'database',
+          tablePrefix: ''
+        }
+      }
+    }, options);
 
-  // listen on the specified port
-  app.listen(config.get('server.port') || 3000);
+    if ('object' === typeof this.options.hooks) {
+      Object.entries(this.options.hooks).forEach(([event, fn]) => {
+        if ('function' === typeof fn) {
+          this.on(event, fn);
+        }
+      });
+    }
+  }
+
+  emit(event) {
+    // using this wildcard event for easy debugging to see which events fire
+    if ('*' !== event) {
+      this.emit('*', event, this);
+    }
+    return super.emit.apply(this, arguments);
+  }
+
+  getSchema() {
+    return this.schema;
+  }
+
 }
+
+export default Contentry;
