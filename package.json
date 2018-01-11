@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/server.js",
-    "clean": "rm -rf build && mkdir build",
+    "clean": "rimraf build && mkdir build",
     "build-server": "babel --presets es2015 -d ./build ./src",
     "build": "npm run clean && npm run build-server",
     "watch": "nodemon -w src/ --exec \"babel-node --presets es2015 src/server.js\""
@@ -42,6 +42,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "nodemon": "^1.14.10"
+    "nodemon": "^1.14.11",
+    "rimraf": "^2.6.2"
   }
 }

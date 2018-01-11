@@ -39,10 +39,10 @@ class Contentry extends EventEmitter {
     });
 
     this.emit('beforeLoadModels', this);
-    const models = loadModels(this.db);
+    this.models = loadModels(this);
 
     this.emit('beforeLoadResolvers', this);
-    this.resolvers = new Resolvers(models);
+    this.resolvers = new Resolvers(this);
 
     this.emit('beforeCreateSchema', this);
     this.schema = makeExecutableSchema({

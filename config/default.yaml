@@ -7,6 +7,14 @@ wordpress:
     database: wordpress
     tablePrefix: wp_
 server:
+  # enabled: (true|false) to enable or disable the GraphQL server altogether
   enabled: true
   graphiql: true
   port: 3000
+resolvers:
+  rootQuery:
+    # optionWhitelist: array of basic option_name strings or regular expressions
+    optionWhitelist:
+      - siteurl
+      - home
+      - blog[a-z]+

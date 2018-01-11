@@ -4,7 +4,7 @@ import rootQuery from './rootQuery';
 
 class Resolvers {
 
-  constructor(models) {
+  constructor(app) {
     this.resolvers = {};
 
     this.typeDefs = fs.readdirSync(`${__dirname}/resolvers/`)
@@ -15,7 +15,7 @@ class Resolvers {
         return typeDef;
       });
 
-    this.rootQuery = rootQuery(models);
+    this.rootQuery = rootQuery({ models: app.models, options: app.options.resolvers.rootQuery});
 
     this.resolvers.Query = this.rootQuery.resolver;
     this.typeDefs.push(this.rootQuery.typeDef);
