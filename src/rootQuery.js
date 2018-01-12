@@ -8,6 +8,7 @@ export default function rootQuery({ models, options }) {
     page(id: Int, slug: String): Page
     option(name: String): Option
     category(id: Int, slug: String): Category
+    link(id: Int, name: String): Link
   }
   `;
 
@@ -33,6 +34,9 @@ export default function rootQuery({ models, options }) {
     },
     category(_, args) {
       return models.Category.find({ where: args });
+    },
+    link(_, args) {
+      return models.Link.find({ where: args });
     }
   };
 
