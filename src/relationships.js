@@ -13,7 +13,9 @@ export function createRelationships(m) {
   // posts can belong to zero or more categories, and categories contain zero or more posts; same with pages
   m.Post.belongsToMany(m.TermTaxonomy, { through: { model: m.TaxonomyRelationship, unique: false }, foreignKey: 'object_id', constraints: false });
   m.Page.belongsToMany(m.TermTaxonomy, { through: { model: m.TaxonomyRelationship, unique: false }, foreignKey: 'object_id', constraints: false });
-
   m.TermTaxonomy.belongsToMany(m.Post, { through: { model: m.TaxonomyRelationship, unique: false }, foreignKey: 'term_taxonomy_id', constraints: false });
+  m.TermTaxonomy.belongsToMany(m.Page, { through: { model: m.TaxonomyRelationship, unique: false }, foreignKey: 'term_taxonomy_id', constraints: false });
+
+  // terms have taxonomies
   m.TermTaxonomy.belongsTo(m.Term, { foreignKey: 'term_id' });
 };
