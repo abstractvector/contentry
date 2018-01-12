@@ -15,6 +15,33 @@ resolvers:
   rootQuery:
     # optionWhitelist: array of basic option_name strings or regular expressions
     optionWhitelist:
-      - siteurl
-      - home
+      - avatar_[a-z]+
+      - blog_public
       - blog[a-z]+
+      - category_base
+      - close_comments_[a-z_]+
+      - comment_order
+      - comment_registration
+      - comments_per_page
+      - date_format
+      - default_comments_page
+      - gmt_offset
+      - home
+      - large_size_[hw]
+      - links_[a-z_]+
+      - medium_size_[hw]
+      - page_comments
+      - page_for_posts
+      - page_on_front
+      - permalink_structure
+      - posts_per_page
+      - show_avatars
+      - show_on_front
+      - siteurl
+      - start_of_week
+      - tag_base
+      - thumbnail_size_[hw]
+      - time_format
+      - timezone_string
+      - use_smilies
+      - users_can_register
