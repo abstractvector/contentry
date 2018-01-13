@@ -3,9 +3,9 @@ Expose WordPress through GraphQL
 
 # To Do
 - write some documentation
-- add prepublish hooks to build before pushing to npm
+- whitelist the meta keys and values
 - push to npm
-- add some tests
+- add lots more tests
 - add DataLoader to avoid repeat hits to the same resource
 - caching of the sequelize queries
 - unit tests
