@@ -1,12 +1,14 @@
-const typeDef = `
-type CommentMeta {
-  id: ID!
-  commentId: Int
-  key: String
-  value: String
+import AbstractResolver from './AbstractResolver';
+
+export default class CommentMeta extends AbstractResolver {
+
+  initFields() {
+    return {
+      id: 'ID!',
+      commentId: 'Int',
+      key: 'String!',
+      value: 'String'
+    };
+  }
+  
 }
-`;
-
-const resolver = {};
-
-export default { resolver, typeDef };

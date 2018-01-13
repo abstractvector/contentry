@@ -1,11 +1,14 @@
-const typeDef = `
-type Category {
-  id: ID!
-  name: String!
-  slug: String!
+import AbstractResolver from './AbstractResolver';
+
+export default class Category extends AbstractResolver {
+
+  initFields() {
+    return {
+      id: 'ID!',
+      name: 'String!',
+      slug: 'String!',
+      group: 'Int'
+    };
+  }
+  
 }
-`;
-
-const resolver = {};
-
-export default { resolver, typeDef };

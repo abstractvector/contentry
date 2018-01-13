@@ -1,10 +1,12 @@
-const typeDef = `
-type Option {
-  name: String!
-  value: String
+import AbstractResolver from './AbstractResolver';
+
+export default class Option extends AbstractResolver {
+
+  initFields() {
+    return {
+      name: 'String!',
+      value: 'String'
+    };
+  }
+  
 }
-`;
-
-const resolver = {};
-
-export default { resolver, typeDef };

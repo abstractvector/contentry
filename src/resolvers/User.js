@@ -1,15 +1,21 @@
-const typeDef = `
-type User {
-  id: ID!
-  displayName: String!
-  posts: [Post]
-}
-`;
+import AbstractResolver from './AbstractResolver';
 
-const resolver = {
-  posts(user) {
-    return user.getPosts();
+export default class User extends AbstractResolver {
+
+  initFields() {
+    return {
+      id: 'ID!',
+      displayName: 'String',
+      posts: '[Post]'
+    };
   }
-};
 
-export default { resolver, typeDef };
+  initResolvers() {
+    return {
+      posts(user) {
+        return user.getPosts();
+      }
+    };
+  }
+  
+}

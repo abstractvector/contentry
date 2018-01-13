@@ -8,11 +8,24 @@ class Resolvers {
     this.resolvers = {};
 
     this.typeDefs = fs.readdirSync(`${__dirname}/resolvers/`)
+      .filter(f => f !== 'AbstractResolver.js')
       .map(f => {
         let name = f.substr(0, f.indexOf('.js'));
-        const {resolver, typeDef} = require(`${__dirname}/resolvers/${f}`).default;
-        this.resolvers[name] = resolver;
-        return typeDef;
+
+        const t = require(`${__dirname}/resolvers/${f}`).default;
+        if (t.resolver && t.typeDef) {
+          this.resolvers[name] = t.resolver;
+          return t.typeDef;
+        } else {
+          let options = {};
+          if (app.options.resolvers && app.options.resolvers[name]) {
+            options = app.options.resolvers[name];
+          }
+          const r = new t(options);
+          app.emit(`afterInitResolver:${name}`, r, app);
+          this.resolvers[name] = r.getResolvers();
+          return r.getTypeDef();
+        }
       });
 
     this.rootQuery = rootQuery({ models: app.models, options: app.options.resolvers.rootQuery});
