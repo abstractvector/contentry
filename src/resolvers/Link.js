@@ -13,8 +13,17 @@ export default class Link extends AbstractResolver {
       rating: 'Int',
       modifiedAt: 'String',
       rel: 'String',
-      notes: 'String'
+      notes: 'String',
+      owner: 'User'
     };
   }
+
+  initResolvers() {
+     return {
+       user(link) {
+         return link.getUser();
+       }
+     };
+   }
   
 }

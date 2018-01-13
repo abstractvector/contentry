@@ -7,7 +7,19 @@ export default class Category extends AbstractResolver {
       id: 'ID!',
       name: 'String!',
       slug: 'String!',
-      group: 'Int'
+      group: 'Int',
+      meta: {
+        type: '[MetaData]',
+        enabled: false
+      }
+    };
+  }
+
+  initResolvers() {
+    return {
+      meta(category) {
+        return category.getTermMeta();
+      }
     };
   }
   

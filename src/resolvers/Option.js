@@ -4,8 +4,10 @@ export default class Option extends AbstractResolver {
 
   initFields() {
     return {
+      id: 'ID!',
       name: 'String!',
-      value: 'String'
+      value: 'String',
+      autoload: 'String'
     };
   }
   

@@ -2,7 +2,6 @@
 Expose WordPress through GraphQL
 
 # To Do
-- add all fields to typedefs and whitelist safe fields in config
 - write some documentation
 - add prepublish hooks to build before pushing to npm
 - push to npm

@@ -31,6 +31,10 @@ export function createRelationships(m) {
   m.Page.hasMany(m.Comment, { foreignKey: 'comment_post_ID'} );
   m.Post.hasMany(m.Comment, { foreignKey: 'comment_post_ID'} );
 
+  m.Comment.belongsTo(m.Attachment, { as: 'Attachment', foreignKey: 'comment_post_ID' });
+  m.Comment.belongsTo(m.Page, { as: 'Page', foreignKey: 'comment_post_ID' });
+  m.Comment.belongsTo(m.Post, { as: 'Post', foreignKey: 'comment_post_ID' });
+
   // things have terms
   m.Attachment.belongsToMany(m.TermTaxonomy, { through: { model: m.TermRelationship, unique: false }, foreignKey: 'object_id', constraints: false });
   m.Page.belongsToMany(m.TermTaxonomy, { through: { model: m.TermRelationship, unique: false }, foreignKey: 'object_id', constraints: false });

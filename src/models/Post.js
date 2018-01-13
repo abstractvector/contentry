@@ -93,7 +93,8 @@ export default function(sequelize, DataTypes) {
     tableName: 'posts',
     defaultScope: {
       where: {
-        post_type: 'post'
+        post_type: 'post',
+        post_status: 'publish'
       }
     }
   });

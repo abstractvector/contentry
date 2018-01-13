@@ -3,24 +3,29 @@ export default function rootQuery({ models, options }) {
 
   const typeDef = `
   type Query {
-    user(id: Int, slug: String): User
-    post(id: Int, slug: String): Post
-    page(id: Int, slug: String): Page
+    attachment(id: ID, slug: String): Attachment
+    category(ID: Int, slug: String): Category
+    comment(ID: Int): Comment
+    link(id: ID, name: String): Link
     option(name: String): Option
-    category(id: Int, slug: String): Category
-    link(id: Int, name: String): Link
+    page(id: ID, slug: String): Page
+    post(id: ID, slug: String): Post
+    user(id: ID, slug: String): User
   }
   `;
 
   const resolver = {
-    user(_, args) {
-      return models.User.find({ where: args });
+    attachment(_, args) {
+      return models.Attachment.find({ where: args });
     },
-    post(_, args) {
-      return models.Post.find({ where: args });
+    category(_, args) {
+      return models.Category.find({ where: args });
     },
-    page(_, args) {
-      return models.Page.find({ where: args });
+    comment(_, args) {
+      return models.Comment.find({ where: args });
+    },
+    link(_, args) {
+      return models.Link.find({ where: args });
     },
     option(_, args) {
       return models.Option.find({ where: args }).then((option) => {
@@ -32,11 +37,14 @@ export default function rootQuery({ models, options }) {
         ) ? option : null;
       });
     },
-    category(_, args) {
-      return models.Category.find({ where: args });
+    page(_, args) {
+      return models.Page.find({ where: args });
     },
-    link(_, args) {
-      return models.Link.find({ where: args });
+    post(_, args) {
+      return models.Post.find({ where: args });
+    },
+    user(_, args) {
+      return models.User.find({ where: args });
     }
   };
 

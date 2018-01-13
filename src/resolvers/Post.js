@@ -5,17 +5,53 @@ export default class Post extends AbstractResolver {
   initFields() {
     return {
       id: 'ID!',
-      name: 'String!',
-      slug: 'String!',
+      createdAt: 'String!',
+      createdAtGmt: 'String!',
       content: 'String',
+      name: 'String!',
       excerpt: 'String',
       status: 'String',
+      commentStatus: 'String',
+      pingStatus: 'String',
+      password: {
+        type: 'String',
+        enabled: false
+      },
+      slug: 'String',
+      toPing: {
+        type: 'String',
+        enabled: false
+      },
+      pinged: {
+        type: 'String',
+        enabled: false
+      },
+      modifiedAt: 'String',
+      modifiedAtGmt: 'String',
+      contentFiltered: 'String',
+      guid: {
+        type: 'String',
+        enabled: false
+      },
+      menuOrder: 'Int',
+      type: {
+        type: 'String',
+        enabled: false
+      },
+      mimeType: {
+        type: 'String',
+        enabled: false
+      },
+      commentCount: 'Int',
       author: 'User!',
+      parent: 'Post',
       categories: '[Category]',
       tags: '[Tag]',
       comments: '[Comment]',
-      createdAt: 'String!',
-      modifiedAt: 'String!'
+      meta: {
+        type: '[MetaData]',
+        enabled: false
+      }
     };
   }
 
@@ -40,6 +76,9 @@ export default class Post extends AbstractResolver {
       },
       comments(post) {
         return post.getComments();
+      },
+      meta(post) {
+        return post.getPostMeta();
       }
     };
   }

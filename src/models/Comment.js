@@ -29,6 +29,10 @@ export default function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       field: 'comment_date'
     },
+    createdAtGmt: {
+      type: DataTypes.DATE,
+      field: 'comment_date_gmt'
+    },
     content: {
       type: DataTypes.STRING,
       field: 'comment_content'
