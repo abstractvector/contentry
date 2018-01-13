@@ -1,6 +1,11 @@
 # Contentry
 Highly extensible GraphQL read APIs for the WordPress blog platform.
 
+[![Build Status][travis-image]][travis-url]
+[![Node Version][node-image]][node-url]
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+
 By reading directly from the MySQL database, this library allows you to make the WordPress webserver externally inaccessible and expose the content to your UI via GraphQL. This integration model makes it the perfect partner for a Progressive Web App built using a technology such as ReactJS.
 
 ```js
@@ -30,7 +35,7 @@ This is a [Node.js](https://nodejs.org/en/) module available through the
 [npm registry](https://www.npmjs.com/).
 
 Before installing, [download and install Node.js](https://nodejs.org/en/download/).
-Node.js 9.3.0 or higher is required.
+Node.js 7.x or higher is required.
 
 Installation is done using the
 [`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):

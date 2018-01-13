@@ -1,6 +1,9 @@
 {
   "name": "contentry",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">= 5"
+  },
   "description": "Expose WordPress through GraphQL",
   "main": "index.js",
   "scripts": {
