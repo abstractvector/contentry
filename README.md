@@ -110,3 +110,12 @@ contentry.on('*', console.log);
 - Support for WordPress plugins
 - Webhooks for invalidating cache / updating websocket connections
 - Mutations
+
+[travis-image]:https://travis-ci.org/abstractvector/contentry.svg?branch=master
+[travis-url]: https://travis-ci.org/abstractvector/contentry
+[node-image]: https://img.shields.io/node/v/contentry.svg
+[node-url]: https://npmjs.org/package/contentry
+[npm-image]: https://img.shields.io/npm/v/contentry.svg
+[npm-url]: https://npmjs.org/package/contentry
+[downloads-image]: https://img.shields.io/npm/dt/contentry.svg
+[downloads-url]: https://npmjs.org/package/contentry
