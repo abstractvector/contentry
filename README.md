@@ -1,10 +1,10 @@
 # Contentry
 Highly extensible GraphQL read APIs for the WordPress blog platform.
 
-[![Build Status][travis-image]][travis-url]
-[![Node Version][node-image]][node-url]
-[![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
+  [![Build Status][travis-image]][travis-url]
+  [![Node Version][node-image]][node-url]
+  [![NPM Version][npm-image]][npm-url]
+  [![NPM Downloads][downloads-image]][downloads-url]
 
 By reading directly from the MySQL database, this library allows you to make the WordPress webserver externally inaccessible and expose the content to your UI via GraphQL. This integration model makes it the perfect partner for a Progressive Web App built using a technology such as ReactJS.
 
