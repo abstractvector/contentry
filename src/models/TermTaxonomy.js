@@ -1,6 +1,6 @@
 export default function(sequelize, DataTypes) {
   return sequelize.define('TermTaxonomy', {
-    termTaxonomyId: {
+    id: {
       type: DataTypes.INTEGER,
       field: 'term_taxonomy_id',
       primaryKey: true
@@ -12,6 +12,18 @@ export default function(sequelize, DataTypes) {
     taxonomy: {
       type: DataTypes.STRING,
       field: 'taxonomy'
+    },
+    description: {
+      type: DataTypes.STRING,
+      field: 'description'
+    },
+    parent: {
+      type: DataTypes.INTEGER,
+      field: 'parent'
+    },
+    count: {
+      type: DataTypes.INTEGER,
+      field: 'count'
     }
   }, {
     tableName: 'term_taxonomy'

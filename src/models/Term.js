@@ -12,6 +12,10 @@ export default function(sequelize, DataTypes) {
     slug: {
       type: DataTypes.STRING,
       field: 'slug'
+    },
+    group: {
+      type: DataTypes.INTEGER,
+      field: 'term_group'
     }
   }, {
     tableName: 'terms'

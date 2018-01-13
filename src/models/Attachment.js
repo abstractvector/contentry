@@ -1,5 +1,5 @@
 export default function(sequelize, DataTypes) {
-  return sequelize.define('Page', {
+  return sequelize.define('Attachment', {
     id: {
       type: DataTypes.INTEGER,
       field: 'ID',
@@ -93,7 +93,7 @@ export default function(sequelize, DataTypes) {
     tableName: 'posts',
     defaultScope: {
       where: {
-        post_type: 'page'
+        post_type: 'attachment'
       }
     }
   });

@@ -1,6 +1,6 @@
 const typeDef = `
 type Category {
-  id: String!
+  id: ID!
   name: String!
   slug: String!
 }

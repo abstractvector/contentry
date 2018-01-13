@@ -25,6 +25,10 @@ export default function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       field: 'link_description'
     },
+    visible: {
+      type: DataTypes.STRING,
+      field: 'link_visible'
+    },
     rating: {
       type: DataTypes.INTEGER,
       field: 'link_rating'
@@ -40,6 +44,10 @@ export default function(sequelize, DataTypes) {
     notes: {
       type: DataTypes.STRING,
       field: 'link_notes'
+    },
+    rss: {
+      type: DataTypes.STRING,
+      field: 'link_rss'
     }
   }, {
     tableName: 'links',

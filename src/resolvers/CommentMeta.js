@@ -1,6 +1,6 @@
 const typeDef = `
 type CommentMeta {
-  id: Int!
+  id: ID!
   commentId: Int
   key: String
   value: String

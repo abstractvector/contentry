@@ -12,6 +12,10 @@ export default function(sequelize, DataTypes) {
     value: {
       type: DataTypes.STRING,
       field: 'option_value'
+    },
+    autoload: {
+      type: DataTypes.STRING,
+      field: 'autoload'
     }
   }, {
     tableName: 'options'

@@ -1,6 +1,6 @@
 const typeDef = `
 type Comment {
-  id: Int!
+  id: ID!
   postId: Int
   author: String
   createdAt: String
@@ -8,10 +8,14 @@ type Comment {
   type: String
   user: User
   meta: [CommentMeta]
+  parent: Comment
 }
 `;
 
 const resolver = {
+  parent(comment) {
+    return comment.getParent();
+  },
   user(comment) {
     return comment.getUser();
   },

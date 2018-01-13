@@ -1,8 +1,7 @@
 const typeDef = `
 type User {
-  id: Int!
+  id: ID!
   displayName: String!
-  slug: String!
   posts: [Post]
 }
 `;

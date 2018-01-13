@@ -1,6 +1,6 @@
 const typeDef = `
 type Link {
-  id: Int!
+  id: ID!
   url: String!
   name: String!
   image: String
