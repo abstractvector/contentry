@@ -1,11 +1,11 @@
 {
   "name": "contentry",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "engines": {
     "node": ">= 7"
   },
   "description": "Expose WordPress through GraphQL",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "node lib/server.js",
     "clean": "rimraf lib && mkdir lib",
