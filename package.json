@@ -2,7 +2,7 @@
   "name": "contentry",
   "version": "1.0.2",
   "engines": {
-    "node": ">= 5"
+    "node": ">= 7"
   },
   "description": "Expose WordPress through GraphQL",
   "main": "index.js",
