@@ -4,7 +4,7 @@ wordpress:
     hostname: localhost
     username: root
     password:
-    database: wordpress
+    database: wp
     tablePrefix: wp_
 server:
   # enabled: (true|false) to enable or disable the GraphQL server altogether

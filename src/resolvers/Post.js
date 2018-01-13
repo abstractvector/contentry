@@ -9,6 +9,7 @@ type Post {
   author: User!
   categories: [Category]
   tags: [Tag]
+  comments: [Comment]
   createdAt: String!
   modifiedAt: String!
 }
@@ -31,6 +32,9 @@ const resolver = {
         return t.getTerm();
       })
     });
+  },
+  comments(post) {
+    return post.getComments();
   }
 };
 

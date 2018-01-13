@@ -2,7 +2,7 @@ export default function(sequelize, DataTypes) {
   return sequelize.define('Comment', {
     id: {
       type: DataTypes.INTEGER,
-      field: 'ID',
+      field: 'comment_ID',
       primaryKey: true
     },
     postId: {
@@ -33,7 +33,7 @@ export default function(sequelize, DataTypes) {
     tableName: 'comments',
     defaultScope: {
       where: {
-        approved: 1
+        comment_approved: 1
       }
     }
   });

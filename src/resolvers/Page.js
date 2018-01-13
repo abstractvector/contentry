@@ -12,6 +12,7 @@ type Page {
   tags: [Tag]
   createdAt: String!
   modifiedAt: String!
+  comments: [Comment]
 }
 `;
 
@@ -32,6 +33,9 @@ const resolver = {
         return t.getTerm();
       })
     });
+  },
+  comments(post) {
+    return post.getComments();
   }
 };
 
