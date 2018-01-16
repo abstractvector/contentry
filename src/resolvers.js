@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import rootQuery from './rootQuery';
+import RootQuery from './rootQuery';
 
 class Resolvers {
 
@@ -28,10 +28,10 @@ class Resolvers {
         }
       });
 
-    this.rootQuery = rootQuery({ models: app.models, options: app.options.resolvers.rootQuery});
+    this.rootQuery = new RootQuery({ models: app.models, options: app.options.resolvers.rootQuery});
 
-    this.resolvers.Query = this.rootQuery.resolver;
-    this.typeDefs.push(this.rootQuery.typeDef);
+    this.resolvers.Query = this.rootQuery.getResolvers();
+    this.typeDefs.push(this.rootQuery.getTypeDef());
   }
 
   getResolvers() {

@@ -7,7 +7,7 @@ export default class AbstractResolver {
       throw new TypeError(`Cannot construct ${new.target} instances directly`);
     }
 
-    this.name = this.constructor.name;
+    this.name = this.initName() || this.constructor.name;
     this.options = options || {};
 
     const fields = this.initFields();
@@ -20,7 +20,8 @@ export default class AbstractResolver {
           field = {
             type: fields[name],            
             enabled: true,
-            desription: null
+            desription: null,
+            arguments: {}
           };
           break;
 
@@ -28,7 +29,8 @@ export default class AbstractResolver {
           field = Object.assign({
             type: null,
             enabled: true,
-            description: null
+            description: null,
+            arguments: {}
           }, fields[name]);
           break;
 
@@ -44,6 +46,10 @@ export default class AbstractResolver {
     });
 
     this.resolvers = this.initResolvers();
+  }
+
+  initName() {
+    return null;
   }
 
   initFields() {
@@ -70,7 +76,12 @@ export default class AbstractResolver {
   ${this.fields[field].description}
   """
   ` : '';
-        return `${description}${field}: ${this.fields[field].type}`;
+        let fieldString = `${description}${field}`;
+        if (this.fields[field].arguments && Object.keys(this.fields[field].arguments).length > 0) {
+          fieldString += `(${Object.entries(this.fields[field].arguments).map(([key, value]) => `${key}: ${value}`).join(', ')})`;
+        }
+        fieldString += `: ${this.fields[field].type}`;
+        return fieldString;
       });
 
     const description = this.getDescription() ? `
@@ -99,4 +110,39 @@ type ${this.getName()} {
 
     return resolvers;
   }
+
+  decomposeArgs(args) {
+    let options = {
+      where: {},
+      limit: null,
+      offset: null,
+      order: null
+    };
+
+    let order = { order: null, orderBy: null} ;
+
+    Object.entries(args).forEach(([key, value]) => {
+      switch (key) {
+        case 'limit':
+        case 'offset':
+          options[key] = value;
+          break;
+
+        case 'order':
+        case 'orderBy':
+          order[key] = value;
+          break;
+
+        default:
+          options.where[key] = value;
+      }
+    });
+
+    if (order.orderBy !== null) {
+      options.order = [ [order.orderBy, order.order] ];
+    }
+
+    return options;
+  }
+
 }

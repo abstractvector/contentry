@@ -45,4 +45,5 @@ export function createRelationships(m) {
 
   // terms have taxonomies
   m.TermTaxonomy.belongsTo(m.Term, { foreignKey: 'term_id' });
+  m.Term.hasOne(m.TermTaxonomy, { foreignKey: 'term_id' });
 };

@@ -8,7 +8,7 @@ import { loadModels } from './models';
 
 class Contentry extends EventEmitter {
 
-  constructor(options) {
+  constructor(options, localMakeExecutableSchema) {
     super();
 
     this._parseOptions(options);
@@ -45,7 +45,7 @@ class Contentry extends EventEmitter {
     this.resolvers = new Resolvers(this);
 
     this.emit('beforeCreateSchema', this);
-    this.schema = makeExecutableSchema({
+    this.schema = (localMakeExecutableSchema || makeExecutableSchema)({
       typeDefs: this.resolvers.getTypeDefs(),
       resolvers: this.resolvers.getResolvers()
     });
@@ -77,10 +77,12 @@ class Contentry extends EventEmitter {
   }
 
   emit(event) {
+    /*
     // using this wildcard event for easy debugging to see which events fire
     if ('*' !== event) {
       this.emit('*', event, this);
     }
+    */
     return super.emit.apply(this, arguments);
   }
 

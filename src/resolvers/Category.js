@@ -8,6 +8,10 @@ export default class Category extends AbstractResolver {
       name: 'String!',
       slug: 'String!',
       group: 'Int',
+      posts: {
+        arguments: { limit: 'Int', offset: 'Int', orderBy: 'String', order: 'String' },
+        type: '[Post]'
+      },
       meta: {
         type: '[MetaData]',
         enabled: false
@@ -17,8 +21,13 @@ export default class Category extends AbstractResolver {
 
   initResolvers() {
     return {
-      meta(category) {
+      meta: (category) => {
         return category.getTermMeta();
+      },
+      posts: (category, args) => {
+        return category.getTermTaxonomy().then(
+          termTaxonomy => termTaxonomy.getPosts(this.decomposeArgs(args))
+        );
       }
     };
   }

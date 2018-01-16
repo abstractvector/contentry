@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
 import KoaBody from 'koa-bodyparser';
+import KoaCors from '@koa/cors';
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 import config from 'config';
 
@@ -19,6 +20,8 @@ const contentry = new Contentry(config);
 // enable the server itself
 if (true === config.get('server.enabled')) {
   const app = new Koa();
+  app.use(KoaCors({ origin: '*' }));
+
   const router = new KoaRouter();
 
   // enable the GraphQL endpoint
