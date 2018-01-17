@@ -43,7 +43,8 @@
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.3.0",
     "mysql2": "^1.5.1",
-    "sequelize": "^4.31.0"
+    "sequelize": "^4.31.0",
+    "wpautop": "^0.2.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

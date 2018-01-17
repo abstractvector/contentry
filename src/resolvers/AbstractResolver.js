@@ -2,11 +2,12 @@ import { isBoolean } from 'util';
 
 export default class AbstractResolver {
 
-  constructor(options) {
+  constructor({ models, options }) {
     if (new.target === AbstractResolver) {
       throw new TypeError(`Cannot construct ${new.target} instances directly`);
     }
 
+    this.models = models;
     this.name = this.initName() || this.constructor.name;
     this.options = options || {};
 
@@ -109,6 +110,18 @@ type ${this.getName()} {
       });
 
     return resolvers;
+  }
+
+  getResolver(key) {
+    return this.resolvers[key];
+  }
+
+  setResolver(key, value) {
+    if ('function' !== typeof value) {
+      throw new TypeError(`Resolvers should be a function, but received type: ${typeof value}`);
+    }
+    this.resolvers[key] = value;
+    return this;
   }
 
   decomposeArgs(args) {

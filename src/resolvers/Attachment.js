@@ -32,7 +32,7 @@ export default class Attachment extends AbstractResolver {
       parent: '[Attachment]',
       guid: {
         type: 'String',
-        enabled: false
+        enabled: true
       },
       menuOrder: 'Int',
       type: {

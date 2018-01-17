@@ -21,7 +21,7 @@ class Resolvers {
           if (app.options.resolvers && app.options.resolvers[name]) {
             options = app.options.resolvers[name];
           }
-          const r = new t(options);
+          const r = new t({ models: app.models, options });
           app.emit(`afterInitResolver:${name}`, r, app);
           this.resolvers[name] = r.getResolvers();
           return r.getTypeDef();

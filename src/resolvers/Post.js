@@ -1,3 +1,5 @@
+import Formatter from '../helpers/Formatter';
+
 import AbstractResolver from './AbstractResolver';
 
 export default class Post extends AbstractResolver {
@@ -51,7 +53,8 @@ export default class Post extends AbstractResolver {
       meta: {
         type: '[MetaData]',
         enabled: false
-      }
+      },
+      thumbnail: 'Attachment'
     };
   }
 
@@ -79,6 +82,18 @@ export default class Post extends AbstractResolver {
       },
       meta(post) {
         return post.getPostMeta();
+      },
+      thumbnail: (post) => {
+        const Attachment = this.models.Attachment;
+        return post.getPostMeta({ where: { meta_key: '_thumbnail_id' } }).then(meta => {
+          if (meta.length === 0) return null;
+
+          const thumbnailId = meta[0].value;
+          return Attachment.find({ where: { id: thumbnailId }})
+        });
+      },
+      content(post) {
+        return Formatter.wpTextToParagraphs(post.get('content'));
       }
     };
   }

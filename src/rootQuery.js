@@ -48,7 +48,7 @@ export default class RootQuery extends AbstractResolver {
   }
     
   initResolvers() {
-    const models = this.options.models;
+    const models = this.models;
     const options = this.options;
     
     return {
