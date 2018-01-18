@@ -1,5 +1,6 @@
-import Formatter from '../helpers/Formatter';
+import html2plaintext from 'html2plaintext';
 
+import Formatter from '../helpers/Formatter';
 import AbstractResolver from './AbstractResolver';
 
 export default class Post extends AbstractResolver {
@@ -92,8 +93,26 @@ export default class Post extends AbstractResolver {
           return Attachment.find({ where: { id: thumbnailId }})
         });
       },
+      excerpt: (post) => {
+        if (post.excerpt) return post.excerpt;
+  
+        let content = post.content;
+  
+        // look for the read more tag
+        if (content.indexOf('<!--more-->') > 0) {
+          return html2plaintext(content.substr(0, content.indexOf('<!--more-->'))).trim();
+        }
+  
+        // look for the end of the first paragraph
+        if (content.indexOf("\r\n") > 0) {
+          return html2plaintext(content.substr(0, content.indexOf('\r\n'))).trim();
+        }
+  
+        // else return all the content we can find
+        return post.content;
+      },
       content(post) {
-        return Formatter.wpTextToParagraphs(post.get('content'));
+        return Formatter.wpParse(post.get('content'));
       }
     };
   }

@@ -2,14 +2,21 @@ import { isBoolean } from 'util';
 
 export default class AbstractResolver {
 
-  constructor({ models, options }) {
+  constructor(args = {}) {
     if (new.target === AbstractResolver) {
       throw new TypeError(`Cannot construct ${new.target} instances directly`);
     }
 
-    this.models = models;
-    this.name = this.initName() || this.constructor.name;
+    if (!args || typeof args !== 'object') {
+      throw new TypeError(`Resolver class must be constructed with object, received: ${typeof args}`);
+    }
+
+    let { models, options } = args;
+
+    this.models = models || {};;
     this.options = options || {};
+
+    this.name = this.initName() || this.constructor.name;
 
     const fields = this.initFields();
     this.fields = {};

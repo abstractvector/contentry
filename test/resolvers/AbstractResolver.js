@@ -10,7 +10,7 @@ describe('AbstractResolver class', function() {
     });
 
     it('throws an error when constructed', function() {
-      expect(() => new AbstractResolver()).to.throw(TypeError, 'Cannot construct');
+      expect(() => new AbstractResolver()).to.throw(TypeError);
     });
   });
 
