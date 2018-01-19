@@ -12,6 +12,10 @@ export default class RootQuery extends AbstractResolver {
         arguments: { id: 'ID', slug: 'String' },
         type: 'Attachment'
       },
+      attachments: {
+        arguments: { id: '[ID]' },
+        type: '[Attachment]'
+      },
       category: {
         arguments: { id: 'ID', slug: 'String' },
         type: 'Category'
@@ -54,6 +58,9 @@ export default class RootQuery extends AbstractResolver {
     return {
       attachment: (_, args) => {
         return models.Attachment.find({ where: args });
+      },
+      attachments: (_, args) => {
+        return models.Attachment.findAll(this.decomposeArgs(args));
       },
       category: (_, args) => {
         return models.Term.find({ where: args });
