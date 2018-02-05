@@ -1,3 +1,5 @@
+import { Op } from 'sequelize';
+
 import AbstractResolver from './resolvers/AbstractResolver';
 
 export default class RootQuery extends AbstractResolver {
@@ -41,7 +43,7 @@ export default class RootQuery extends AbstractResolver {
         type: 'Post'
       },
       posts: {
-        arguments: { limit: 'Int', offset: 'Int', orderBy: 'String', order: 'String' },
+        arguments: { limit: 'Int', offset: 'Int', orderBy: 'String', order: 'String', categoryAncestor: 'String' },
         type: '[Post]'
       },
       user: {
@@ -88,8 +90,29 @@ export default class RootQuery extends AbstractResolver {
       post: (_, args) => {
         return models.Post.find({ where: args });
       },
-      posts: (_, args) => {
-        return models.Post.findAll(this.decomposeArgs(args));
+      posts: async (_, args) => {
+        let params = this.decomposeArgs(args);
+        delete params.where.categoryAncestor;
+
+        if (args.categoryAncestor) {
+          let term = await models.Term.findOne({ where: { slug: args.categoryAncestor }});
+          if (term) {
+            let categoryIds = await models.TermTaxonomy.findAllDescendents(term.id);
+            if (!params.include) {
+              params.include = [];
+            }
+            params.include.push({
+              model: models.TermTaxonomy,
+              where: {
+                termId: {
+                  [Op.in]: categoryIds
+                }
+              }
+            });
+          }
+        }
+
+        return models.Post.findAll(params);
       },
       user: (_, args) => {
         return models.User.find({ where: args });
