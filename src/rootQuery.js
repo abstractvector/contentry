@@ -109,6 +109,8 @@ export default class RootQuery extends AbstractResolver {
                 }
               }
             });
+          } else {
+            return [];
           }
         }
 
