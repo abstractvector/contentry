@@ -11,46 +11,17 @@ export default class AbstractResolver {
       throw new TypeError(`Resolver class must be constructed with object, received: ${typeof args}`);
     }
 
-    let { models, options } = args;
+    const { models = {}, options = {} } = args;
 
-    this.models = models || {};;
-    this.options = options || {};
+    this.models = models;
+    this.options = options;
 
     this.name = this.initName() || this.constructor.name;
 
-    const fields = this.initFields();
     this.fields = {};
 
-    Object.keys(fields).forEach(name => {
-      let field = {};
-      switch (typeof fields[name]) {
-        case 'string':
-          field = {
-            type: fields[name],            
-            enabled: true,
-            desription: null,
-            arguments: {}
-          };
-          break;
-
-        case 'object':
-          field = Object.assign({
-            type: null,
-            enabled: true,
-            description: null,
-            arguments: {}
-          }, fields[name]);
-          break;
-
-        default:
-          throw new TypeError(`Field definition for ${this.getName()}.${name} in resolver is invalid type: ${typeof fields[name]}`);
-      }
-
-      if ('object' === typeof this.options.fields && isBoolean(this.options.fields[name])) {
-        field.enabled = this.options.fields[name];
-      }
-
-      this.fields[name] = field;
+    Object.entries(this.initFields()).forEach(([key, value]) => {
+      this.setField(key, value);
     });
 
     this.resolvers = this.initResolvers();
@@ -104,6 +75,39 @@ type ${this.getName()} {
 }`;
 
     return typeDefString;
+  }
+
+  setField(name, options) {
+    let field = {};
+    switch (typeof options) {
+      case 'string':
+        field = {
+          type: options,
+          enabled: true,
+          desription: null,
+          arguments: {}
+        };
+        break;
+
+      case 'object':
+        field = Object.assign({
+          type: null,
+          enabled: true,
+          description: null,
+          arguments: {}
+        }, options);
+        break;
+
+      default:
+        throw new TypeError(`Field definition for ${this.getName()}.${name} in resolver is invalid type: ${typeof options}`);
+    }
+
+    if ('object' === typeof this.options.fields && isBoolean(this.options.fields[name])) {
+      field.enabled = this.options.fields[name];
+    }
+
+    this.fields[name] = field;
+    return this;
   }
 
   getResolvers() {
