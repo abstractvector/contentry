@@ -1,6 +1,6 @@
 {
   "name": "contentry",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "engines": {
     "node": ">= 8.9.0"
   },
@@ -44,6 +44,7 @@
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
     "mysql2": "^1.5.2",
+    "php-serialize": "^1.2.5",
     "sequelize": "^4.33.2",
     "wpautop": "^0.2.2"
   },

@@ -1,3 +1,5 @@
+import Serialize from 'php-serialize';
+
 import AbstractResolver from './AbstractResolver';
 
 export default class Attachment extends AbstractResolver {
@@ -41,7 +43,9 @@ export default class Attachment extends AbstractResolver {
       },
       mimeType: 'String',
       commentCount: 'Int',
-      meta: '[MetaData]'
+      meta: '[MetaData]',
+      width: 'Int',
+      height: 'Int'
     };
   }
 
@@ -52,8 +56,30 @@ export default class Attachment extends AbstractResolver {
       },
       meta(attachment) {
         return attachment.getPostMeta();
+      },
+      width: async (_) => {
+        const meta = await this.getMeta(_);
+        return meta.width || null;
+      },
+      height: async (_) => {
+        const meta = await this.getMeta(_);
+        return meta.height || null;
       }
     };
+  }
+
+  async getMeta(_) {
+    const meta = await _.getPostMeta({ where: { key: '_wp_attachment_metadata' }});
+    if (null === meta || meta.length !== 1) {
+      return null;
+    }
+
+    try {
+      return Serialize.unserialize(meta[0].value) || null;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
   }
   
 }
