@@ -38,6 +38,10 @@ export default class RootQuery extends AbstractResolver {
         arguments: { id: 'ID', slug: 'String' },
         type: 'Page'
       },
+      pages: {
+        arguments: { limit: 'Int', offset: 'Int', orderBy: 'String', order: 'String' },
+        type: '[Page]'        
+      },
       post: {
         arguments: { id: 'ID', slug: 'String' },
         type: 'Post'
@@ -86,6 +90,10 @@ export default class RootQuery extends AbstractResolver {
       },
       page: (_, args) => {
         return models.Page.find({ where: args });
+      },
+      pages: (_, args) => {
+        let params = this.decomposeArgs(args);
+        return models.Page.findAll(params);
       },
       post: (_, args) => {
         return models.Post.find({ where: args });
