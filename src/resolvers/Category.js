@@ -15,19 +15,33 @@ export default class Category extends AbstractResolver {
       meta: {
         type: '[MetaData]',
         enabled: false
-      }
+      },
+      ancestry: '[Category]'
     };
   }
 
   initResolvers() {
     return {
-      meta: (category) => {
-        return category.getTermMeta();
+      meta: (_) => {
+        return _.getTermMeta();
       },
-      posts: (category, args) => {
-        return category.getTermTaxonomy().then(
+      posts: (_, args) => {
+        return _.getTermTaxonomy().then(
           termTaxonomy => termTaxonomy.getPosts(this.decomposeArgs(args))
         );
+      },
+      ancestry: async (_) => {
+        const termTaxonomy = await _.getTermTaxonomy();
+        if (!termTaxonomy) {
+          return [];
+        }
+
+        const ancestry = await termTaxonomy.findAncestry();
+        if (!ancestry) {
+          return [];
+        }
+
+        return ancestry.map(t => this.models.Term.findOne({ where: { id: t.termId }}));
       }
     };
   }

@@ -29,6 +29,27 @@ export default function(sequelize, DataTypes) {
     tableName: 'term_taxonomy'
   });
 
+  TermTaxonomy.prototype.findAncestry = async function() {
+    let ancestry = [];
+    let i = 0;
+    let parent;
+
+    let current = this;
+
+    while (current.parent !== 0) {
+      if (++i > 128) {
+        throw new Error('Uncontrolled iteration detected, aborting');
+      }
+
+      parent = await TermTaxonomy.findOne({ where: { termId: current.parent }});
+      ancestry.push(parent);
+
+      current = parent;
+    }
+
+    return ancestry;
+  };
+
   TermTaxonomy.findAllDescendents = async (termId) => {
     let result = await TermTaxonomy.findOne({ where: { termId }});
     if (!result) {
