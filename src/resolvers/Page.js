@@ -79,6 +79,9 @@ export default class Page extends AbstractResolver {
       },
       meta(page) {
         return page.getPostMeta();
+      },
+      content(page) {
+        return Formatter.wpParse(page.get('content'));
       }
     };
   }
