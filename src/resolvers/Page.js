@@ -1,3 +1,4 @@
+import Formatter from '../helpers/Formatter';
 import AbstractResolver from './AbstractResolver';
 
 export default class Page extends AbstractResolver {
